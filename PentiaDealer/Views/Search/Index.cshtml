@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewData["Title"] = "Search";
+}
+
+@model IEnumerable<PentiaDealer.Models.Customers>
+<h1>Search</h1>
+
+
+
+<div class="container">
+    <select id="SearchBy">
+        <option value="Customer">Customer</option>
+        <option value="Cars">Cars</option>
+        <option value="SalesPerson">Sales Person</option>
+    </select>
+    <select id="SearchByCustomer">
+        <option value="CustomerFirstName" id="CustomerSearch">First Name</option>
+        <option value="CustomerLastName" id="CustomerSearch">Last Name</option>
+        <option value="CustomerAddress" id="CustomerSearch">Address</option>
+    </select>
+    <select id="SearchByCar">
+        <option value="CarMake" id="CarSearch">Make</option>
+        <option value="CarModel" id="CarSearch">Model</option>
+    </select>
+    <select id="SearchBySP">
+        <option value="SPName" id="SPSearch">Name</option>
+        <option value="SPAddress" id="SPSearch">Address</option>
+    </select>
+    @Html.TextBox("Search")<input type="submit" id="SearchBtn" value="Search" accesskey="enter"/> 
+
+    <div id="DataSearching" class="row">
+    
+    </div>
+</div>
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>

@@ -10,6 +10,8 @@ namespace PentiaDealer.Controllers
 {
     public class HomeController : Controller
     {
+        //PentiaDealerContext context = new PentiaDealerContext
+
         public IActionResult Index()
         {
             return View();

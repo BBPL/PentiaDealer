@@ -1,0 +1,25 @@
+﻿ var data = new List<SalesPeople> {
+    new SalesPeople { Name = "Magdalena", JobTitle = "Curabitur", Address = "Ap #753-8283 Eros St.", Salary = 10122 },
+    new  SalesPeople{ Name = "Eleonor", JobTitle = "habitant", Address = "Ap #539-3766 Dapibus Rd.", Salary = 38802 },
+    new SalesPeople { Name = "Maria", JobTitle = "lorem,", Address = "956-4883 Aliquet St.", Salary = 35161 },
+    new SalesPeople { Name = "Anna", JobTitle = "a", Address = "Ap #623-9129 Nunc St.", Salary = 29199 },
+    new SalesPeople { Name = "Emma", JobTitle = "rutrum", Address = "Ap #583-2189 Mi Avenue", Salary = 38854 },
+    new SalesPeople { Name = "Sara", JobTitle = "dapibus", Address = "Ap #634-6336 Velit St.", Salary = 17967 },
+    new  SalesPeople{ Name = "Pär", JobTitle = "Morbi", Address = "445-8190 Ut Ave", Salary = 37068 },
+    new SalesPeople { Name = "Silvia", JobTitle = "eu", Address = "116-1120 Lacinia St.", Salary = 48137 },
+    new  SalesPeople{ Name = "Peter", JobTitle = "mauris.", Address = "P.O. Box 523, 7660 Ut Ave", Salary = 34359 },
+    new SalesPeople{ Name = "Christian", JobTitle = "nulla", Address = "657-2961 Consectetuer Avenue", Salary = 49863 },
+    new SalesPeople{ Name = "Sara", JobTitle = "sem", Address = "Ap #455-4050 Nibh Avenue", Salary = 20187 },
+    new SalesPeople{ Name = "Elena", JobTitle = "vel", Address = "Ap #170-3204 Id Av.", Salary = 30434 },
+    new SalesPeople{ Name = "Petter", JobTitle = "pharetra", Address = "694-6199 Cum Street", Salary = 26235 },
+    new SalesPeople { Name = "Märta", JobTitle = "metus", Address = "3553 Augue. Street", Salary = 48441 },
+    new SalesPeople{ Name = "Per", JobTitle = "eleifend.", Address = "487-584 Dolor Av.", Salary = 23899 },
+    new SalesPeople{ Name = "Henrik", JobTitle = "Morbi", Address = "1417 Neque. Av.", Salary = 14530 },
+    new SalesPeople { Name = "Petter", JobTitle = "ultrices,", Address = "P.O. Box 552, 7137 Dolor Avenue", Salary = 20897 },
+    new SalesPeople { Name = "Emma", JobTitle = "dolor", Address = "P.O. Box 487, 4390 Fringilla St.", Salary = 45597 },
+    new SalesPeople{ Name = "Eleonor", JobTitle = "urna.", Address = "9731 Fringilla Rd.", Salary = 49603 },
+    new SalesPeople{ Name = "Anna", JobTitle = "nulla.", Address = "P.O. Box 502, 954 Amet Rd.", Salary = 25174 },
+    new SalesPeople{ Name = "Peter", JobTitle = "nunc.", Address = "6703 In Ave", Salary = 41049 }
+    };
+            context.SalesPeople.AddRange(data);
+            context.SaveChanges();

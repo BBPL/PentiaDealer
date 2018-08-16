@@ -1,0 +1,29 @@
+﻿  var data = new List<CarPurchases> {
+    new CarPurchases { CustomerId = 21, CarId = 1, SalesPersonId = 8, PricePaid = 370, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 23, CarId = 7, SalesPersonId = 1, PricePaid = 406, OrderDate = DateTime.Now},
+    new CarPurchases { CustomerId = 4, CarId = 4, SalesPersonId = 15, PricePaid = 227, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 29, CarId = 4, SalesPersonId = 18, PricePaid = 255, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 31, CarId = 2, SalesPersonId = 10, PricePaid = 387, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 3, CarId= 2, SalesPersonId = 5, PricePaid = 462, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 23, CarId = 1, SalesPersonId = 20, PricePaid = 304, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 25, CarId = 7, SalesPersonId = 12, PricePaid = 497, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 21, CarId = 6, SalesPersonId = 8, PricePaid = 180, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 14, CarId = 6, SalesPersonId = 8, PricePaid = 291, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 4, CarId= 2, SalesPersonId = 19, PricePaid = 168, OrderDate = DateTime.Now},
+    new CarPurchases { CustomerId = 19, CarId = 3, SalesPersonId = 10, PricePaid = 328, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 21, CarId = 4, SalesPersonId = 6, PricePaid = 433, OrderDate = DateTime.Now},
+    new CarPurchases { CustomerId = 37, CarId = 3, SalesPersonId = 1, PricePaid = 462, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 19, CarId = 5, SalesPersonId = 8, PricePaid = 250, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 1, CarId= 5, SalesPersonId = 19, PricePaid = 354, OrderDate = DateTime.Now},
+    new CarPurchases { CustomerId = 3, CarId= 5, SalesPersonId = 14, PricePaid = 430, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 22, CarId = 1, SalesPersonId = 4, PricePaid = 376, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 7, CarId= 3, SalesPersonId = 8, PricePaid = 430, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 30, CarId = 2, SalesPersonId = 8, PricePaid = 299, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 28, CarId = 1, SalesPersonId = 13, PricePaid = 495, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 4, CarId= 3, SalesPersonId = 19, PricePaid = 319, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 8, CarId= 7, SalesPersonId = 19, PricePaid = 143, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 5, CarId= 2, SalesPersonId = 13, PricePaid = 212, OrderDate = DateTime.Now },
+    new CarPurchases { CustomerId = 25, CarId = 4, SalesPersonId = 18, PricePaid = 106, OrderDate = DateTime.Now }};
+            context.CarPurchases.AddRange(data);
+            context.SaveChanges();
+    
