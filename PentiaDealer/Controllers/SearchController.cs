@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using PentiaDealer.Models;
@@ -7,14 +8,13 @@ namespace PentiaDealer.Controllers
 {
     public class SearchController : Controller
     {
-
-        private PentiaDealerContext context = new PentiaDealerContext();
-
-
         // GET: Search
         public ActionResult Index(string s)
         {
-            return View(context.Customers.ToList());
+            using (var context = new PentiaDealerContext())
+            {
+                return View(context.Customers.ToList());
+            }
         }
 
         public JsonResult SearchCustomers(string SearchSpec, string SearchValue)
@@ -38,7 +38,7 @@ namespace PentiaDealer.Controllers
             }
         }
 
-        private IQueryable<Result> SearchByCustomer(Func<Customers, bool> filter)
+        private IList<Result> SearchByCustomer(Func<Customers, bool> filter)
         {
             return Search(filter, car => true, salesPerson => true);
         }
@@ -60,7 +60,7 @@ namespace PentiaDealer.Controllers
             }
         }
 
-        private IQueryable<Result> Search(Func<Cars, bool> filter)
+        private IList<Result> Search(Func<Cars, bool> filter)
         {
             return Search(customer => true, filter, salesPerson => true);
         }
@@ -82,31 +82,34 @@ namespace PentiaDealer.Controllers
             }
         }
 
-        private IQueryable<Result> SearchBySalesPeople(Func<SalesPeople, bool> filter)
+        private IList<Result> SearchBySalesPeople(Func<SalesPeople, bool> filter)
         {
             return Search(customer => true, car => true, filter);
         }
 
-        private IQueryable<Result> Search(Func<Customers, bool> customerFilter, Func<Cars, bool> carFilter, Func<SalesPeople, bool> salesPersonFilter)
+        private IList<Result> Search(Func<Customers, bool> customerFilter, Func<Cars, bool> carFilter, Func<SalesPeople, bool> salesPersonFilter)
         {
-            return from cp in context.CarPurchases
-                from c in context.Cars
-                from cus in context.Customers
-                from sp in context.SalesPeople
-                where cp.CustomerId == cus.CustomerId
-                where cp.CarId == c.CarId
-                where cp.SalesPersonId == sp.SalesPersonId
-                where customerFilter(cus)
-                where carFilter(c)
-                where salesPersonFilter(sp)
-                select new Result
-                {
-                    Customers = cus,
-                    Cars = c,
-                    SalesPerson = sp,
-                    BuyDate = cp.OrderDate,
-                    Price = cp.PricePaid
-                };
+            using (var context = new PentiaDealerContext())
+            {
+                return (from cp in context.CarPurchases
+                        from c in context.Cars
+                        from cus in context.Customers
+                        from sp in context.SalesPeople
+                        where cp.CustomerId == cus.CustomerId
+                        where cp.CarId == c.CarId
+                        where cp.SalesPersonId == sp.SalesPersonId
+                        where customerFilter(cus)
+                        where carFilter(c)
+                        where salesPersonFilter(sp)
+                        select new Result
+                        {
+                            Customers = cus,
+                            Cars = c,
+                            SalesPerson = sp,
+                            BuyDate = cp.OrderDate,
+                            Price = cp.PricePaid
+                        }).ToArray();
+            }
         }
     }
 }
