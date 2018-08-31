@@ -40,22 +40,7 @@ namespace PentiaDealer.Controllers
 
         private IQueryable<Result> SearchByCustomer(Func<Customers, bool> filter)
         {
-            return from cp in context.CarPurchases
-                   from c in context.Cars
-                   from cus in context.Customers
-                   from sp in context.SalesPeople
-                   where cp.CustomerId == cus.CustomerId
-                   where cp.CarId == c.CarId
-                   where cp.SalesPersonId == sp.SalesPersonId
-                   where filter(cus)
-                   select new Result
-                   {
-                       Customers = cus,
-                       Cars = c,
-                       SalesPerson = sp,
-                       BuyDate = cp.OrderDate,
-                       Price = cp.PricePaid
-                   };
+            return Search(filter, car => true, salesPerson => true);
         }
 
         public JsonResult SearchCars(string SearchSpec, string SearchValue)
@@ -77,22 +62,7 @@ namespace PentiaDealer.Controllers
 
         private IQueryable<Result> Search(Func<Cars, bool> filter)
         {
-            return from cp in context.CarPurchases
-                from c in context.Cars
-                from cus in context.Customers
-                from sp in context.SalesPeople
-                where cp.CustomerId == cus.CustomerId
-                where cp.CarId == c.CarId
-                where cp.SalesPersonId == sp.SalesPersonId
-                where filter(c)
-                select new Result
-                {
-                    Customers = cus,
-                    Cars = c,
-                    SalesPerson = sp,
-                    BuyDate = cp.OrderDate,
-                    Price = cp.PricePaid
-                };
+            return Search(customer => true, filter, salesPerson => true);
         }
 
         public JsonResult SearchSP(string SearchSpec, string SearchValue)
@@ -114,6 +84,11 @@ namespace PentiaDealer.Controllers
 
         private IQueryable<Result> SearchBySalesPeople(Func<SalesPeople, bool> filter)
         {
+            return Search(customer => true, car => true, filter);
+        }
+
+        private IQueryable<Result> Search(Func<Customers, bool> customerFilter, Func<Cars, bool> carFilter, Func<SalesPeople, bool> salesPersonFilter)
+        {
             return from cp in context.CarPurchases
                 from c in context.Cars
                 from cus in context.Customers
@@ -121,7 +96,9 @@ namespace PentiaDealer.Controllers
                 where cp.CustomerId == cus.CustomerId
                 where cp.CarId == c.CarId
                 where cp.SalesPersonId == sp.SalesPersonId
-                where filter(sp)
+                where customerFilter(cus)
+                where carFilter(c)
+                where salesPersonFilter(sp)
                 select new Result
                 {
                     Customers = cus,
