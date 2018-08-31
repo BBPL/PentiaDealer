@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 using PentiaDealer.Models;
 
 namespace PentiaDealer.Controllers
 {
     public class SearchController : Controller
     {
-       
+
         private PentiaDealerContext context = new PentiaDealerContext();
-        
+
 
         // GET: Search
         public ActionResult Index(string s)
@@ -31,10 +25,10 @@ namespace PentiaDealer.Controllers
                               from c in context.Cars
                               from cus in context.Customers
                               from sp in context.SalesPeople
-                              where ((cp.CustomerId == cus.CustomerId) &&
-                                     (cp.CarId == c.CarId) &&
-                                     (cp.SalesPersonId == sp.SalesPersonId) &&
-                                     (cus.Name.Contains(SearchValue)))
+                              where cp.CustomerId == cus.CustomerId
+                              where cp.CarId == c.CarId
+                              where cp.SalesPersonId == sp.SalesPersonId
+                              where cus.Name.Contains(SearchValue)
                               select new Result
                               {
                                   Customers = cus,
@@ -47,52 +41,52 @@ namespace PentiaDealer.Controllers
 
                 case "CustomerLastName":
                     var res2 = from cp in context.CarPurchases
-                              from c in context.Cars
-                              from cus in context.Customers
-                              from sp in context.SalesPeople
-                              where ((cp.CustomerId == cus.CustomerId) &&
-                                     (cp.CarId == c.CarId) &&
-                                     (cp.SalesPersonId == sp.SalesPersonId) &&
-                                     (cus.Surname.Contains(SearchValue)))
-                              select new Result
-                              {
-                                  Customers = cus,
-                                  Cars = c,
-                                  SalesPerson = sp,
-                                  BuyDate = cp.OrderDate,
-                                  Price = cp.PricePaid
-                              };
+                               from c in context.Cars
+                               from cus in context.Customers
+                               from sp in context.SalesPeople
+                               where cp.CustomerId == cus.CustomerId
+                               where cp.CarId == c.CarId
+                               where cp.SalesPersonId == sp.SalesPersonId
+                               where cus.Surname.Contains(SearchValue)
+                               select new Result
+                               {
+                                   Customers = cus,
+                                   Cars = c,
+                                   SalesPerson = sp,
+                                   BuyDate = cp.OrderDate,
+                                   Price = cp.PricePaid
+                               };
 
                     return Json(res2);
                 case "CustomerAddress":
                     var res3 = from cp in context.CarPurchases
-                              from c in context.Cars
-                              from cus in context.Customers
-                              from sp in context.SalesPeople
-                              where ((cp.CustomerId == cus.CustomerId) &&
-                                     (cp.CarId == c.CarId) &&
-                                     (cp.SalesPersonId == sp.SalesPersonId) &&
-                                     (cus.Address.Contains(SearchValue)))
-                              select new Result
-                              {
-                                  Customers = cus,
-                                  Cars = c,
-                                  SalesPerson = sp,
-                                  BuyDate = cp.OrderDate,
-                                  Price = cp.PricePaid
-                              };
+                               from c in context.Cars
+                               from cus in context.Customers
+                               from sp in context.SalesPeople
+                               where cp.CustomerId == cus.CustomerId
+                               where cp.CarId == c.CarId
+                               where cp.SalesPersonId == sp.SalesPersonId
+                               where cus.Address.Contains(SearchValue)
+                               select new Result
+                               {
+                                   Customers = cus,
+                                   Cars = c,
+                                   SalesPerson = sp,
+                                   BuyDate = cp.OrderDate,
+                                   Price = cp.PricePaid
+                               };
 
                     return Json(res3);
 
                 default:
                     return Json("");
-            }   
+            }
 
         }
 
         public JsonResult SearchCars(string SearchSpec, string SearchValue)
         {
-            
+
             switch (SearchSpec)
             {
                 case "CarMake":
@@ -100,10 +94,10 @@ namespace PentiaDealer.Controllers
                               from c in context.Cars
                               from cus in context.Customers
                               from sp in context.SalesPeople
-                              where ((cp.CustomerId == cus.CustomerId) &&
-                                     (cp.CarId == c.CarId) &&
-                                     (c.Make.Contains(SearchValue)) &&
-                                     (cp.SalesPersonId == sp.SalesPersonId))
+                              where cp.CustomerId == cus.CustomerId
+                              where cp.CarId == c.CarId
+                              where cp.SalesPersonId == sp.SalesPersonId
+                              where c.Make.Contains(SearchValue)
                               select new Result
                               {
                                   Customers = cus,
@@ -117,21 +111,21 @@ namespace PentiaDealer.Controllers
 
                 case "CarModel":
                     var res2 = from cp in context.CarPurchases
-                              from c in context.Cars
-                              from cus in context.Customers
-                              from sp in context.SalesPeople
-                              where ((cp.CustomerId == cus.CustomerId) &&
-                                     (cp.CarId == c.CarId) &&
-                                     (c.Model.Contains(SearchValue)) &&
-                                     (cp.SalesPersonId == sp.SalesPersonId))
-                              select new Result
-                              {
-                                  Customers = cus,
-                                  Cars = c,
-                                  SalesPerson = sp,
-                                  BuyDate = cp.OrderDate,
-                                  Price = cp.PricePaid
-                              };
+                               from c in context.Cars
+                               from cus in context.Customers
+                               from sp in context.SalesPeople
+                               where cp.CustomerId == cus.CustomerId
+                               where cp.CarId == c.CarId
+                               where cp.SalesPersonId == sp.SalesPersonId
+                               where c.Model.Contains(SearchValue)
+                               select new Result
+                               {
+                                   Customers = cus,
+                                   Cars = c,
+                                   SalesPerson = sp,
+                                   BuyDate = cp.OrderDate,
+                                   Price = cp.PricePaid
+                               };
 
                     return Json(res2);
                 default:
@@ -150,10 +144,10 @@ namespace PentiaDealer.Controllers
                               from c in context.Cars
                               from cus in context.Customers
                               from sp in context.SalesPeople
-                              where ((cp.CustomerId == cus.CustomerId) &&
-                                     (cp.CarId == c.CarId) &&
-                                     (cp.SalesPersonId == sp.SalesPersonId) &&
-                                     (sp.Name.Contains(SearchValue)))
+                              where cp.CustomerId == cus.CustomerId
+                              where cp.CarId == c.CarId
+                              where cp.SalesPersonId == sp.SalesPersonId
+                              where sp.Name.Contains(SearchValue)
                               select new Result
                               {
                                   Customers = cus,
@@ -174,14 +168,14 @@ namespace PentiaDealer.Controllers
                                       (cp.CarId == c.CarId) &&
                                       (cp.SalesPersonId == sp.SalesPersonId) &&
                                       (sp.Address.Contains(SearchValue)))
-                              select new Result
-                              {
-                                  Customers = cus,
-                                  Cars = c,
-                                  SalesPerson = sp,
-                                  BuyDate = cp.OrderDate,
-                                  Price = cp.PricePaid
-                              };
+                               select new Result
+                               {
+                                   Customers = cus,
+                                   Cars = c,
+                                   SalesPerson = sp,
+                                   BuyDate = cp.OrderDate,
+                                   Price = cp.PricePaid
+                               };
 
                     return Json(res2);
                 default:
