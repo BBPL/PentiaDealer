@@ -22,15 +22,15 @@ namespace PentiaDealer.Controllers
             switch (SearchSpec)
             {
                 case "CustomerFirstName":
-                    var res = Search(customer => customer.Name.Contains(SearchValue));
+                    var res = SearchByCustomer(customer => customer.Name.Contains(SearchValue));
                     return Json(res);
 
                 case "CustomerLastName":
-                    var res2 = Search(customer => customer.Surname.Contains(SearchValue));
+                    var res2 = SearchByCustomer(customer => customer.Surname.Contains(SearchValue));
                     return Json(res2);
 
                 case "CustomerAddress":
-                    var res3 = Search(customer => customer.Address.Contains(SearchValue));
+                    var res3 = SearchByCustomer(customer => customer.Address.Contains(SearchValue));
                     return Json(res3);
 
                 default:
@@ -38,7 +38,7 @@ namespace PentiaDealer.Controllers
             }
         }
 
-        private IQueryable<Result> Search(Func<Customers, bool> filter)
+        private IQueryable<Result> SearchByCustomer(Func<Customers, bool> filter)
         {
             return from cp in context.CarPurchases
                    from c in context.Cars
@@ -64,49 +64,35 @@ namespace PentiaDealer.Controllers
             switch (SearchSpec)
             {
                 case "CarMake":
-                    var res = from cp in context.CarPurchases
-                              from c in context.Cars
-                              from cus in context.Customers
-                              from sp in context.SalesPeople
-                              where cp.CustomerId == cus.CustomerId
-                              where cp.CarId == c.CarId
-                              where cp.SalesPersonId == sp.SalesPersonId
-                              where c.Make.Contains(SearchValue)
-                              select new Result
-                              {
-                                  Customers = cus,
-                                  Cars = c,
-                                  SalesPerson = sp,
-                                  BuyDate = cp.OrderDate,
-                                  Price = cp.PricePaid
-                              };
-
+                    var res = Search(car => car.Make.Contains(SearchValue));
                     return Json(res);
 
                 case "CarModel":
-                    var res2 = from cp in context.CarPurchases
-                               from c in context.Cars
-                               from cus in context.Customers
-                               from sp in context.SalesPeople
-                               where cp.CustomerId == cus.CustomerId
-                               where cp.CarId == c.CarId
-                               where cp.SalesPersonId == sp.SalesPersonId
-                               where c.Model.Contains(SearchValue)
-                               select new Result
-                               {
-                                   Customers = cus,
-                                   Cars = c,
-                                   SalesPerson = sp,
-                                   BuyDate = cp.OrderDate,
-                                   Price = cp.PricePaid
-                               };
-
+                    var res2 = Search(car => car.Model.Contains(SearchValue));
                     return Json(res2);
                 default:
                     return Json("");
             }
+        }
 
-
+        private IQueryable<Result> Search(Func<Cars, bool> filter)
+        {
+            return from cp in context.CarPurchases
+                from c in context.Cars
+                from cus in context.Customers
+                from sp in context.SalesPeople
+                where cp.CustomerId == cus.CustomerId
+                where cp.CarId == c.CarId
+                where cp.SalesPersonId == sp.SalesPersonId
+                where filter(c)
+                select new Result
+                {
+                    Customers = cus,
+                    Cars = c,
+                    SalesPerson = sp,
+                    BuyDate = cp.OrderDate,
+                    Price = cp.PricePaid
+                };
         }
 
         public JsonResult SearchSP(string SearchSpec, string SearchValue)
@@ -114,51 +100,36 @@ namespace PentiaDealer.Controllers
             switch (SearchSpec)
             {
                 case "SPName":
-                    var res = from cp in context.CarPurchases
-                              from c in context.Cars
-                              from cus in context.Customers
-                              from sp in context.SalesPeople
-                              where cp.CustomerId == cus.CustomerId
-                              where cp.CarId == c.CarId
-                              where cp.SalesPersonId == sp.SalesPersonId
-                              where sp.Name.Contains(SearchValue)
-                              select new Result
-                              {
-                                  Customers = cus,
-                                  Cars = c,
-                                  SalesPerson = sp,
-                                  BuyDate = cp.OrderDate,
-                                  Price = cp.PricePaid
-                              };
-
+                    var res = SearchBySalesPeople(salesPeople => salesPeople.Name.Contains(SearchValue));
                     return Json(res);
 
                 case "SPAddress":
-                    var res2 = from cp in context.CarPurchases
-                               from c in context.Cars
-                               from cus in context.Customers
-                               from sp in context.SalesPeople
-                               where ((cp.CustomerId == cus.CustomerId) &&
-                                      (cp.CarId == c.CarId) &&
-                                      (cp.SalesPersonId == sp.SalesPersonId) &&
-                                      (sp.Address.Contains(SearchValue)))
-                               select new Result
-                               {
-                                   Customers = cus,
-                                   Cars = c,
-                                   SalesPerson = sp,
-                                   BuyDate = cp.OrderDate,
-                                   Price = cp.PricePaid
-                               };
-
+                    var res2 = SearchBySalesPeople(salesPeople => salesPeople.Address.Contains(SearchValue));
                     return Json(res2);
+
                 default:
                     return Json("");
             }
         }
 
-
-
-
+        private IQueryable<Result> SearchBySalesPeople(Func<SalesPeople, bool> filter)
+        {
+            return from cp in context.CarPurchases
+                from c in context.Cars
+                from cus in context.Customers
+                from sp in context.SalesPeople
+                where cp.CustomerId == cus.CustomerId
+                where cp.CarId == c.CarId
+                where cp.SalesPersonId == sp.SalesPersonId
+                where filter(sp)
+                select new Result
+                {
+                    Customers = cus,
+                    Cars = c,
+                    SalesPerson = sp,
+                    BuyDate = cp.OrderDate,
+                    Price = cp.PricePaid
+                };
+        }
     }
 }
